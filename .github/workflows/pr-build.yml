@@ -9,6 +9,7 @@ permissions:
   pull-requests: read
   statuses: write
   actions: read
+  id-token: write
 jobs:
   build:
     uses: TauCetiProject/TauCetiTools/.github/workflows/pr-build.yml@d0a464c74bd1e73ad2bed538e9e1b65f7fd4a682
