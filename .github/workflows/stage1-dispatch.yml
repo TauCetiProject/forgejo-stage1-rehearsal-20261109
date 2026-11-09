@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           repository: TauCetiProject/TauCetiTools
-          ref: d43efb27dd27e8dc0b7b36f31320b8c069ff7a1a
+          ref: 08d5a676a9717444ce5a2bdd13f35a7c1ad9f40c
           persist-credentials: false
           path: tools
       - name: Validate protected policy and freeze the dispatch intent

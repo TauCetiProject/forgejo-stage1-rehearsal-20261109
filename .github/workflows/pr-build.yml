@@ -11,10 +11,10 @@ permissions:
   id-token: write
 jobs:
   build:
-    uses: TauCetiProject/TauCetiTools/.github/workflows/pr-build.yml@d43efb27dd27e8dc0b7b36f31320b8c069ff7a1a
+    uses: TauCetiProject/TauCetiTools/.github/workflows/pr-build.yml@08d5a676a9717444ce5a2bdd13f35a7c1ad9f40c
     with:
       tools_repository: TauCetiProject/TauCetiTools
-      tools_ref: d43efb27dd27e8dc0b7b36f31320b8c069ff7a1a
+      tools_ref: 08d5a676a9717444ce5a2bdd13f35a7c1ad9f40c
       project_ref: ${{ github.workflow_sha }}
       lean_root: TauCeti
       roadmap_dir: TauCetiRoadmap

@@ -68,10 +68,10 @@ jobs:
           fetch-depth: 0
 
       - name: Prepare pinned shared tools
-        uses: TauCetiProject/TauCetiTools/.github/actions/setup@d43efb27dd27e8dc0b7b36f31320b8c069ff7a1a
+        uses: TauCetiProject/TauCetiTools/.github/actions/setup@08d5a676a9717444ce5a2bdd13f35a7c1ad9f40c
         with:
           tools-repository: TauCetiProject/TauCetiTools
-          tools-ref: d43efb27dd27e8dc0b7b36f31320b8c069ff7a1a
+          tools-ref: 08d5a676a9717444ce5a2bdd13f35a7c1ad9f40c
           project-directory: .
           source-mirror-enabled: true
       - name: Import-boundary guard (TauCeti/ and TauCeti.lean ⊬ roadmap/review)
@@ -432,10 +432,10 @@ jobs:
     if: ${{ needs.build.result == 'success' && needs.build.outputs.staged == 'true' }}
     permissions:
       contents: read
-    uses: TauCetiProject/TauCetiTools/.github/workflows/publish-lake-cache.yml@d43efb27dd27e8dc0b7b36f31320b8c069ff7a1a
+    uses: TauCetiProject/TauCetiTools/.github/workflows/publish-lake-cache.yml@08d5a676a9717444ce5a2bdd13f35a7c1ad9f40c
     with:
       tools_repository: TauCetiProject/TauCetiTools
-      tools_ref: d43efb27dd27e8dc0b7b36f31320b8c069ff7a1a
+      tools_ref: 08d5a676a9717444ce5a2bdd13f35a7c1ad9f40c
       revision: ${{ github.sha }}
       artifact-name: lake-cache-staging
       reported-toolchain: ${{ needs.build.outputs.reported-toolchain }}
