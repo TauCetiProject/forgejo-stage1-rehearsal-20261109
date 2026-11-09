@@ -1,0 +1,65 @@
+name: Operator dispatch to Forgejo candidate CI
+run-name: Stage 1 operator dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      request:
+        description: Frozen Stage 1 request JSON from the operator ledger
+        required: true
+        type: string
+permissions:
+  contents: write
+  actions: write
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+          path: gate
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: TauCetiProject/TauCetiTools
+          ref: d0a464c74bd1e73ad2bed538e9e1b65f7fd4a682
+          persist-credentials: false
+          path: tools
+      - name: Validate protected policy and freeze the dispatch intent
+        env:
+          PYTHONPATH: tools
+          REQUEST: ${{ inputs.request }}
+          CALLER_REF: ${{ github.ref }}
+          CALLER_SHA: ${{ github.workflow_sha }}
+        run: |
+          python3 - <<'PY_VALIDATE'
+          import os
+          from pathlib import Path
+          from tauceti_tools.ci_candidate import CandidateRequest,ExecutionPolicy,canonical,read_json
+          policy=ExecutionPolicy.parse(read_json(Path('gate/.tauceti/ci-source.json').read_bytes()),configuration=Path('gate/tauceti.toml').read_bytes())
+          request=CandidateRequest.parse(read_json(os.environ['REQUEST'].encode()),policy=policy)
+          assert os.environ['GITHUB_REPOSITORY']==policy.execution.repository.name
+          assert os.environ['GITHUB_REPOSITORY_ID']==str(policy.execution.native_id)
+          assert os.environ['CALLER_REF']=='refs/heads/'+policy.execution_branch
+          assert request.workflow_revision==os.environ['CALLER_SHA']
+          assert os.environ['GITHUB_RUN_ATTEMPT']=='1','A rerun cannot resend an uncertain dispatch; reconcile the original request'
+          Path(os.environ['RUNNER_TEMP'],'dispatch-intent.json').write_bytes(canonical(request.dispatch()))
+          PY_VALIDATE
+      - name: Retain the exact dispatch intent before sending
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: stage1-dispatch-intent-${{ github.run_id }}
+          path: ${{ runner.temp }}/dispatch-intent.json
+          if-no-files-found: error
+      - name: Dispatch with this repository's native job token
+        env:
+          EXECUTION_JOB_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY_SEND'
+          import json,os,urllib.request
+          from pathlib import Path
+          data=Path(os.environ['RUNNER_TEMP'],'dispatch-intent.json').read_bytes()
+          request=urllib.request.Request('https://api.github.com/repos/'+os.environ['GITHUB_REPOSITORY']+'/dispatches',data=data,method='POST',headers={'Authorization':'Bearer '+os.environ['EXECUTION_JOB_TOKEN'],'Accept':'application/vnd.github+json','Content-Type':'application/json','X-GitHub-Api-Version':'2022-11-28'})
+          with urllib.request.urlopen(request,timeout=30) as response:assert response.status==204
+          print('Frozen source candidate event accepted; verify its child receipt/result before promotion')
+          PY_SEND
