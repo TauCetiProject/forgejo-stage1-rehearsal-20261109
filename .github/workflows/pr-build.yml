@@ -1,6 +1,7 @@
 name: Forgejo candidate rehearsal
 run-name: ${{ format('source request={0}', github.event.client_payload.request.request_id) }}
 on:
+  workflow_dispatch:
   repository_dispatch:
     types: [tauceti-source-candidate-v2]
 permissions:

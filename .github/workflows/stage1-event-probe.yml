@@ -1,0 +1,11 @@
+name: Stage 1 event delivery diagnostic
+on:
+  repository_dispatch:
+    types: [stage1-event-delivery-diagnostic]
+permissions:
+  contents: read
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'Owned diagnostic event delivered; this is not source CI evidence'
