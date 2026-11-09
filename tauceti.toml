@@ -7,7 +7,7 @@ kind = "forgejo"
 url = "https://ons-publishing-memory-para.trycloudflare.com"
 [repositories]
 content = { forge = "source", name = "stage1/Code" }
-roadmap = { forge = "source", name = "stage1/Roadmap" }
+roadmap = "TauCetiProject/TauCetiRoadmap"
 [lean]
 roots = ["TauCeti"]
 root_module = "empty"
@@ -22,5 +22,12 @@ mode = "off"
 [services.cache]
 mode = "hosted"
 name = "tauceti-public"
-artifact_url = "https://cache.taucetiproject.org/artifacts"
-revision_url = "https://cache.taucetiproject.org/revisions"
+artifact_url = "https://exemption-milan-potential-boundary.trycloudflare.com/artifacts"
+revision_url = "https://exemption-milan-potential-boundary.trycloudflare.com/revisions"
+
+[features]
+docs = true
+
+[tools.tools]
+repo = "TauCetiProject/TauCetiTools"
+ref = "d43efb27dd27e8dc0b7b36f31320b8c069ff7a1a"

@@ -1,7 +1,6 @@
 name: Forgejo candidate rehearsal
 run-name: ${{ format('source request={0}', github.event.client_payload.request.request_id) }}
 on:
-  workflow_dispatch:
   repository_dispatch:
     types: [tauceti-source-candidate-v2]
 permissions:
@@ -12,11 +11,13 @@ permissions:
   id-token: write
 jobs:
   build:
-    uses: TauCetiProject/TauCetiTools/.github/workflows/pr-build.yml@d0a464c74bd1e73ad2bed538e9e1b65f7fd4a682
+    uses: TauCetiProject/TauCetiTools/.github/workflows/pr-build.yml@d43efb27dd27e8dc0b7b36f31320b8c069ff7a1a
     with:
       tools_repository: TauCetiProject/TauCetiTools
-      tools_ref: d0a464c74bd1e73ad2bed538e9e1b65f7fd4a682
+      tools_ref: d43efb27dd27e8dc0b7b36f31320b8c069ff7a1a
       project_ref: ${{ github.workflow_sha }}
       lean_root: TauCeti
       roadmap_dir: TauCetiRoadmap
       source_candidate_enabled: true
+    secrets:
+      LAKE_CACHE_KEY: ${{ secrets.LAKE_CACHE_KEY }}
