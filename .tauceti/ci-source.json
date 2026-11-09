@@ -1,0 +1,36 @@
+{
+  "schema": "tauceti-ci.source-candidate/v2",
+  "source": {
+    "forge": {
+      "kind": "forgejo",
+      "url": "https://ons-publishing-memory-para.trycloudflare.com"
+    },
+    "name": "stage1/Code",
+    "id": 1
+  },
+  "execution": {
+    "forge": {
+      "kind": "github",
+      "url": "https://github.com"
+    },
+    "name": "TauCetiProject/forgejo-stage1-rehearsal-20261109",
+    "id": 1451035425
+  },
+  "credential_origin": {
+    "kind": "forgejo",
+    "url": "https://ons-publishing-memory-para.trycloudflare.com"
+  },
+  "workflow": ".github/workflows/pr-build.yml",
+  "harness": {
+    "forge": {
+      "kind": "github",
+      "url": "https://github.com"
+    },
+    "name": "TauCetiProject/TauCetiTools",
+    "id": 1426390374
+  },
+  "harness_revision": "d0a464c74bd1e73ad2bed538e9e1b65f7fd4a682",
+  "base_branch": "main",
+  "execution_branch": "main",
+  "require_publication": false
+}
