@@ -128,7 +128,7 @@ jobs:
           tools-repository: TauCetiProject/TauCetiTools
           tools-ref: 08d5a676a9717444ce5a2bdd13f35a7c1ad9f40c
           project-directory: .
-          source-mirror-enabled: true
+          source-mirror-enabled: false
       - name: Restore the last published data assets
         uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830
         with:
@@ -521,7 +521,7 @@ jobs:
           tools-repository: TauCetiProject/TauCetiTools
           tools-ref: 08d5a676a9717444ce5a2bdd13f35a7c1ad9f40c
           project-directory: .
-          source-mirror-enabled: true
+          source-mirror-enabled: false
       - name: Lay down the generated data
         id: site-data
         continue-on-error: true
@@ -970,7 +970,7 @@ jobs:
     # `build-site` must have succeeded, so the published site is the one it produced rather than
     # a fallback restore, and its SOURCE_SHA is the one read from the tree that was deployed.
     if: ${{ !cancelled()
-        && 'true' != 'true'
+        && 'false' != 'true'
         && needs.build-site.result == 'success' && needs.deploy.result == 'success'
         && needs.build-site.outputs.docs-source-sha != '' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest

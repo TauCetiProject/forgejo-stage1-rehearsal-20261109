@@ -88,7 +88,7 @@ jobs:
           tools-repository: TauCetiProject/TauCetiTools
           tools-ref: 08d5a676a9717444ce5a2bdd13f35a7c1ad9f40c
           project-directory: .
-          source-mirror-enabled: true
+          source-mirror-enabled: false
       - name: Install elan (pinned + checksum)
         env:
           ELAN_SHA256: df0b2b3a439961ffcbb3985214365ffe40f49bc871df04dff268c7d8e21ca8b2

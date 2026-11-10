@@ -3,10 +3,10 @@ schema_version = 2
 name = "TauCeti Stage 1 rehearsal"
 branch = "main"
 [forges.source]
-kind = "forgejo"
-url = "https://ons-publishing-memory-para.trycloudflare.com"
+kind = "github"
+url = "https://github.com"
 [repositories]
-content = { forge = "source", name = "stage1/Code" }
+content = { forge = "source", name = "TauCetiProject/forgejo-stage1-rehearsal-20261109" }
 roadmap = "TauCetiProject/TauCetiRoadmap"
 [lean]
 roots = ["TauCeti"]
